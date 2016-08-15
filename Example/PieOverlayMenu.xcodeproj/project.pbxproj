@@ -12,6 +12,9 @@
 		A8A59FDC1D61D6470073D175 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8A59FDA1D61D6470073D175 /* Main.storyboard */; };
 		A8A59FDE1D61D6470073D175 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8A59FDD1D61D6470073D175 /* Assets.xcassets */; };
 		A8A59FE11D61D6470073D175 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8A59FDF1D61D6470073D175 /* LaunchScreen.storyboard */; };
+		A8A59FEA1D61DEBD0073D175 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A59FE91D61DEBD0073D175 /* MenuViewController.swift */; };
+		A8A59FEC1D61EE0D0073D175 /* PieOverlayMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A59FEB1D61EE0D0073D175 /* PieOverlayMenu.swift */; };
+		A8A59FEE1D61FEDA0073D175 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8A59FED1D61FEDA0073D175 /* Media.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		A8A59FDD1D61D6470073D175 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A8A59FE01D61D6470073D175 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8A59FE21D61D6470073D175 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A8A59FE91D61DEBD0073D175 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuViewController.swift; path = ../Source/MenuViewController.swift; sourceTree = "<group>"; };
+		A8A59FEB1D61EE0D0073D175 /* PieOverlayMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PieOverlayMenu.swift; path = ../Source/PieOverlayMenu.swift; sourceTree = "<group>"; };
+		A8A59FED1D61FEDA0073D175 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = ../Source/Media.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,7 +44,8 @@
 		A8A59FCA1D61D6470073D175 = {
 			isa = PBXGroup;
 			children = (
-				A8A59FD51D61D6470073D175 /* PieOverlayMenu */,
+				A8A59FE81D61DE800073D175 /* Source */,
+				A8A59FD51D61D6470073D175 /* Example */,
 				A8A59FD41D61D6470073D175 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,7 +58,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A8A59FD51D61D6470073D175 /* PieOverlayMenu */ = {
+		A8A59FD51D61D6470073D175 /* Example */ = {
 			isa = PBXGroup;
 			children = (
 				A8A59FD61D61D6470073D175 /* AppDelegate.swift */,
@@ -61,7 +68,18 @@
 				A8A59FDF1D61D6470073D175 /* LaunchScreen.storyboard */,
 				A8A59FE21D61D6470073D175 /* Info.plist */,
 			);
+			name = Example;
 			path = PieOverlayMenu;
+			sourceTree = "<group>";
+		};
+		A8A59FE81D61DE800073D175 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A8A59FE91D61DEBD0073D175 /* MenuViewController.swift */,
+				A8A59FEB1D61EE0D0073D175 /* PieOverlayMenu.swift */,
+				A8A59FED1D61FEDA0073D175 /* Media.xcassets */,
+			);
+			name = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,6 +142,7 @@
 			files = (
 				A8A59FE11D61D6470073D175 /* LaunchScreen.storyboard in Resources */,
 				A8A59FDE1D61D6470073D175 /* Assets.xcassets in Resources */,
+				A8A59FEE1D61FEDA0073D175 /* Media.xcassets in Resources */,
 				A8A59FDC1D61D6470073D175 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,7 +154,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8A59FEC1D61EE0D0073D175 /* PieOverlayMenu.swift in Sources */,
 				A8A59FD91D61D6470073D175 /* ViewController.swift in Sources */,
+				A8A59FEA1D61DEBD0073D175 /* MenuViewController.swift in Sources */,
 				A8A59FD71D61D6470073D175 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,6 +309,7 @@
 				A8A59FE71D61D6470073D175 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
