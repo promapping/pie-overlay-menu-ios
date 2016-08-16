@@ -53,7 +53,14 @@ class ViewController: UIViewController {
 extension ViewController : PieOverlayMenuDataSource {
 
     func overlayMenuTitleForFooter(currentViewController: UIViewController?) -> String? {
-        return "Pie for Drivers Version 1.0(7)"
+        if let dict = NSBundle.mainBundle().infoDictionary {
+            if let version = dict["CFBundleShortVersionString"] as? String,
+                let bundleVersion = dict["CFBundleVersion"] as? String,
+                let appName = dict["CFBundleName"] as? String {
+                return "\(appName) v\(version) (Build \(bundleVersion))."
+            }
+        }
+        return nil
     }
 
     func overlayMenuTitleForHeader(currentViewController: UIViewController?) -> String? {

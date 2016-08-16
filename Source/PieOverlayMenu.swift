@@ -63,7 +63,14 @@ public class PieOverlayMenu: UIViewController {
         viewController.view.transform = CGAffineTransformMakeScale(1.0, 0.01)
         viewController.view.layoutIfNeeded()
 
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animateWithDuration(1.0,
+                                   delay: 0.0,
+                                   usingSpringWithDamping: 0.6,
+                                   initialSpringVelocity: 10.0,
+//        UIView.animateWithDuration(0.5,
+//                                   delay: 0.0,
+                                   options: UIViewAnimationOptions.CurveEaseInOut,
+                                   animations: {
             //            self.currentViewController?.view.alpha = 0
             self.currentViewController?.view.transform = CGAffineTransformMakeScale(1.0, 0.01)
             viewController.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
