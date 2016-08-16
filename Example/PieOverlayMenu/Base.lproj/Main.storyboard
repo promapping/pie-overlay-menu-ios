@@ -6,10 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Menu View Controller-->
         <scene sceneID="RFP-X4-a2O">
             <objects>
-                <viewController storyboardIdentifier="MenuViewControllerID" id="Le2-Xj-gYl" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MenuViewControllerID" id="Le2-Xj-gYl" customClass="MenuViewController" customModule="PieOverlayMenu" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nTG-0p-lh4"/>
                         <viewControllerLayoutGuide type="bottom" id="mca-ui-UQN"/>

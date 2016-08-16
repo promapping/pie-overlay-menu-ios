@@ -8,26 +8,100 @@
 
 import UIKit
 
-class PieOverlayMenu: UIViewController {
+// MARK: - Protocols -
 
-    let topView : UIView = UIView()
-    let closeButton : UIButton = UIButton()
-    let titleLabel : UILabel = UILabel()
-    let contentView : UIView = UIView()
-    let footerView : UIView = UIView()
-    let footerLabel : UILabel = UILabel()
-    var viewsDictionary : [String:AnyObject]!
+@objc public protocol PieOverlayMenuDelegate {
+    optional func overlayMenuCloseButtonPressed()
+}
 
-    weak var currentViewController: UIViewController?
+public protocol PieOverlayMenuDataSource {
+    func overlayMenuTitleForFooter(currentViewController: UIViewController?) -> String?
+    func overlayMenuTitleForHeader(currentViewController: UIViewController?) -> String?
+}
 
-    override func viewDidLoad() {
+public class PieOverlayMenu: UIViewController {
+
+    // MARK: - Public properties -
+    public var dataSource : PieOverlayMenuDataSource? {
+        didSet {
+            dataSourceUpdate()
+        }
+    }
+    weak public var delegate : PieOverlayMenuDelegate?
+
+    // MARK: - Private properties -
+    private let headerView : UIView = UIView()
+    private let closeButton : UIButton = UIButton()
+    private let headerLabel : UILabel = UILabel()
+    private let contentView : UIView = UIView()
+    private let footerView : UIView = UIView()
+    private let footerLabel : UILabel = UILabel()
+    private var viewsDictionary : [String:AnyObject]!
+
+    weak private var currentViewController: UIViewController?
+
+    // MARK: - Overrides -
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
         setupViews()
     }
 
-    //MARK: - Views setup
-    func setupViews() {
+    // MARK: - Public methods -
+    public func close() {
+        delegate?.overlayMenuCloseButtonPressed?()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    public func changeContentController(viewController: UIViewController) {
+        currentViewController?.willMoveToParentViewController(nil)
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+        self.addChildViewController(viewController)
+        self.addSubview(viewController.view, toView:self.contentView)
+        self.currentViewController?.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
+        viewController.view.alpha = 1
+        viewController.view.transform = CGAffineTransformMakeScale(1.0, 0.01)
+        viewController.view.layoutIfNeeded()
+
+        UIView.animateWithDuration(0.5, animations: {
+            //            self.currentViewController?.view.alpha = 0
+            self.currentViewController?.view.transform = CGAffineTransformMakeScale(1.0, 0.01)
+            viewController.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            viewController.view.alpha = 1
+        }) { _ in
+            //            UIView.animateWithDuration(0.5, animations: {
+            //
+            //                }, completion: { finished in
+            self.currentViewController?.view.removeFromSuperview()
+            self.currentViewController?.removeFromParentViewController()
+            viewController.didMoveToParentViewController(self)
+            self.currentViewController = viewController
+            self.dataSourceUpdate()
+            //            })
+        }
+    }
+
+    // MARK: - Internal methods -
+    private func dataSourceUpdate() {
+        guard let dataSource = self.dataSource else { return }
+
+        headerLabel.text = dataSource.overlayMenuTitleForHeader(self.currentViewController)
+        footerLabel.text = dataSource.overlayMenuTitleForFooter(self.currentViewController)
+    }
+
+    private func addSubview(subView:UIView, toView parentView:UIView) {
+        parentView.addSubview(subView)
+
+        var viewBindingsDict = [String: AnyObject]()
+        viewBindingsDict["subView"] = subView
+        parentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[subView]|",
+            options: [], metrics: nil, views: viewBindingsDict))
+        parentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[subView]|",
+            options: [], metrics: nil, views: viewBindingsDict))
+    }
+
+    // MARK: UI Setup
+    private func setupViews() {
         self.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
         self.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         self.view.backgroundColor = UIColor(red: 67/255, green: 75/255, blue: 90/255, alpha: 1.0)
@@ -35,9 +109,9 @@ class PieOverlayMenu: UIViewController {
 
         viewsDictionary = [
             "topLayoutGuide": self.topLayoutGuide,
-            "topView":topView,
+            "headerView":headerView,
             "closeButton": closeButton,
-            "titleLabel": titleLabel,
+            "headerLabel": headerLabel,
             "contentView": contentView,
             "footerView": footerView,
             "footerLabel": footerLabel
@@ -45,45 +119,44 @@ class PieOverlayMenu: UIViewController {
 
         self.view.accessibilityIdentifier = "vcView"
 
-        setupTopView()
+        setupHeaderView()
         setupContentAndFooterViews()
     }
 
-    func setupTopView() {
-        topView.translatesAutoresizingMaskIntoConstraints = false
-        //        topView.backgroundColor = UIColor.orangeColor().colorWithAlphaComponent(0.2)
-        self.view.addSubview(topView)
+    private func setupHeaderView() {
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        //        headerView.backgroundColor = UIColor.orangeColor().colorWithAlphaComponent(0.2)
+        self.view.addSubview(headerView)
 
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         let menuCloseImage = UIImage(named: "menu_close_button")
         closeButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
         closeButton.setImage(menuCloseImage, forState: UIControlState.Normal)
         closeButton.addTarget(self, action: #selector(PieOverlayMenu.close), forControlEvents: UIControlEvents.TouchUpInside)
-        topView.addSubview(closeButton)
+        headerView.addSubview(closeButton)
 
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = "Menu"
-        titleLabel.font = UIFont.boldSystemFontOfSize(25)
-        titleLabel.textColor = UIColor.whiteColor()
-        topView.addSubview(titleLabel)
+        headerLabel.translatesAutoresizingMaskIntoConstraints = false
+        headerLabel.font = UIFont.boldSystemFontOfSize(25)
+        headerLabel.textColor = UIColor.whiteColor()
+        headerView.addSubview(headerLabel)
 
         let closeButtonConstraintsV = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[closeButton]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
         let closeButtonConstraintsH = NSLayoutConstraint.constraintsWithVisualFormat("H:|-18-[closeButton]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        topView.addConstraints(closeButtonConstraintsV)
-        topView.addConstraints(closeButtonConstraintsH)
+        headerView.addConstraints(closeButtonConstraintsV)
+        headerView.addConstraints(closeButtonConstraintsH)
 
-        let titleLabelConstraintsV = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[titleLabel]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        let titleLabelConstraintsH = NSLayoutConstraint.constraintsWithVisualFormat("H:[closeButton]-32-[titleLabel]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        topView.addConstraints(titleLabelConstraintsV)
-        topView.addConstraints(titleLabelConstraintsH)
+        let headerLabelConstraintsV = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[headerLabel]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let headerLabelConstraintsH = NSLayoutConstraint.constraintsWithVisualFormat("H:[closeButton]-32-[headerLabel]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        headerView.addConstraints(headerLabelConstraintsV)
+        headerView.addConstraints(headerLabelConstraintsH)
 
-        let topViewConstraintsV = NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide]-[topView(50)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        let topViewConstraintsH = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[topView]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
-        view.addConstraints(topViewConstraintsV)
-        view.addConstraints(topViewConstraintsH)
+        let headerViewConstraintsV = NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide]-[headerView(50)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let headerViewConstraintsH = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[headerView]-0-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        view.addConstraints(headerViewConstraintsV)
+        view.addConstraints(headerViewConstraintsH)
     }
 
-    func setupContentAndFooterViews() {
+    private func setupContentAndFooterViews() {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         //        contentView.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.2)
         contentView.clipsToBounds = true
@@ -96,7 +169,6 @@ class PieOverlayMenu: UIViewController {
         self.view.addSubview(footerView)
 
         footerLabel.translatesAutoresizingMaskIntoConstraints = false
-        footerLabel.text = "Pie for Drivers Version 1.0(7)"
         footerLabel.textColor = UIColor.whiteColor()
         footerLabel.font = UIFont.systemFontOfSize(12)
         footerLabel.textAlignment = NSTextAlignment.Center
@@ -113,7 +185,7 @@ class PieOverlayMenu: UIViewController {
             metrics: nil,
             views: viewsDictionary))
 
-        let contentViewConstraintsV = NSLayoutConstraint.constraintsWithVisualFormat("V:[topView]-50-[contentView]-75-[footerView]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
+        let contentViewConstraintsV = NSLayoutConstraint.constraintsWithVisualFormat("V:[headerView]-50-[contentView]-75-[footerView]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
         let contentViewConstraintsH = NSLayoutConstraint.constraintsWithVisualFormat("H:|-100-[contentView]-100-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary)
         view.addConstraints(contentViewConstraintsV)
         view.addConstraints(contentViewConstraintsH)
@@ -123,47 +195,6 @@ class PieOverlayMenu: UIViewController {
         view.addConstraints(footerViewConstraintsH)
     }
 
-    func close() {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-
-    func displayContentController(viewController: UIViewController) {
-        currentViewController?.willMoveToParentViewController(nil)
-        viewController.view.translatesAutoresizingMaskIntoConstraints = false
-        self.addChildViewController(viewController)
-        self.addSubview(viewController.view, toView:self.contentView)
-        self.currentViewController?.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
-        viewController.view.alpha = 1
-        viewController.view.transform = CGAffineTransformMakeScale(1.0, 0.01)
-        viewController.view.layoutIfNeeded()
-
-        UIView.animateWithDuration(0.5, animations: {
-//            self.currentViewController?.view.alpha = 0
-            self.currentViewController?.view.transform = CGAffineTransformMakeScale(1.0, 0.01)
-            viewController.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
-            viewController.view.alpha = 1
-        }) { _ in
-//            UIView.animateWithDuration(0.5, animations: {
-//
-//                }, completion: { finished in
-                    self.currentViewController?.view.removeFromSuperview()
-                    self.currentViewController?.removeFromParentViewController()
-                    viewController.didMoveToParentViewController(self)
-                    self.currentViewController = viewController
-//            })
-        }
-    }
-
-    func addSubview(subView:UIView, toView parentView:UIView) {
-        parentView.addSubview(subView)
-
-        var viewBindingsDict = [String: AnyObject]()
-        viewBindingsDict["subView"] = subView
-        parentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[subView]|",
-            options: [], metrics: nil, views: viewBindingsDict))
-        parentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[subView]|",
-            options: [], metrics: nil, views: viewBindingsDict))
-    }
 }
 
 
