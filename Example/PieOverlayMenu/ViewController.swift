@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
-        self.showMenu(self)
+//        self.showMenu(self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,16 +34,16 @@ class ViewController: UIViewController {
         let menuVC = storyboard.instantiateViewControllerWithIdentifier("MenuViewControllerID")
         vc.changeContentController(menuVC)
 
-        let triggerTime = (Int64(NSEC_PER_SEC) * 3)
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime), dispatch_get_main_queue(), { () -> Void in
-            let aVC = storyboard.instantiateViewControllerWithIdentifier("AViewControllerID")
-            vc.changeContentController(aVC)
-        })
-
-        let triggerTime2 = (Int64(NSEC_PER_SEC) * 6)
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime2), dispatch_get_main_queue(), { () -> Void in
-            vc.changeContentController(menuVC)
-        })
+//        let triggerTime = (Int64(NSEC_PER_SEC) * 3)
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime), dispatch_get_main_queue(), { () -> Void in
+//            let aVC = storyboard.instantiateViewControllerWithIdentifier("AViewControllerID")
+//            vc.changeContentController(aVC)
+//        })
+//
+//        let triggerTime2 = (Int64(NSEC_PER_SEC) * 6)
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime2), dispatch_get_main_queue(), { () -> Void in
+//            vc.changeContentController(menuVC)
+//        })
 
         self.presentViewController(vc, animated: true, completion: nil)
     }

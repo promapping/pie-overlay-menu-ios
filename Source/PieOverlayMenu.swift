@@ -19,6 +19,10 @@ public protocol PieOverlayMenuDataSource {
     func overlayMenuTitleForHeader(currentViewController: UIViewController?) -> String?
 }
 
+public protocol PieOverlayMenuContentView: class {
+    var overlayMenu: PieOverlayMenu? { get set }
+}
+
 public class PieOverlayMenu: UIViewController {
 
     // MARK: - Public properties -
@@ -81,9 +85,10 @@ public class PieOverlayMenu: UIViewController {
             //                }, completion: { finished in
             self.currentViewController?.view.removeFromSuperview()
             self.currentViewController?.removeFromParentViewController()
-            viewController.didMoveToParentViewController(self)
+            (viewController as? PieOverlayMenuContentView)?.overlayMenu = self
             self.currentViewController = viewController
             self.dataSourceUpdate()
+            viewController.didMoveToParentViewController(self)
             //            })
         }
     }
