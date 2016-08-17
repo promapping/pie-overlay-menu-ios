@@ -27,7 +27,7 @@ extension MenuViewController: UICollectionViewDelegate {
         print("item selected \(indexPath.row)")
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let aVC = storyboard.instantiateViewControllerWithIdentifier("AViewControllerID")
-        overlayMenu?.changeContentController(aVC)
+        overlayMenu?.pushViewController(aVC, animated: true)
     }
 }
 

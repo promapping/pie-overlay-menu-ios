@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A883B3511D64C0C50034B201 /* OtherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A883B3501D64C0C50034B201 /* OtherViewController.swift */; };
 		A8A59FD71D61D6470073D175 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A59FD61D61D6470073D175 /* AppDelegate.swift */; };
 		A8A59FD91D61D6470073D175 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A59FD81D61D6470073D175 /* ViewController.swift */; };
 		A8A59FDC1D61D6470073D175 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8A59FDA1D61D6470073D175 /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A883B3501D64C0C50034B201 /* OtherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherViewController.swift; sourceTree = "<group>"; };
 		A8A59FD31D61D6470073D175 /* PieOverlayMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PieOverlayMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8A59FD61D61D6470073D175 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A8A59FD81D61D6470073D175 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				A8A59FDD1D61D6470073D175 /* Assets.xcassets */,
 				A8A59FDF1D61D6470073D175 /* LaunchScreen.storyboard */,
 				A8A59FE21D61D6470073D175 /* Info.plist */,
+				A883B3501D64C0C50034B201 /* OtherViewController.swift */,
 			);
 			name = Example;
 			path = PieOverlayMenu;
@@ -158,6 +161,7 @@
 				A8A59FD91D61D6470073D175 /* ViewController.swift in Sources */,
 				A8A59FEA1D61DEBD0073D175 /* MenuViewController.swift in Sources */,
 				A8A59FD71D61D6470073D175 /* AppDelegate.swift in Sources */,
+				A883B3511D64C0C50034B201 /* OtherViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

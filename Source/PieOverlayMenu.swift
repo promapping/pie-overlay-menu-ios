@@ -32,6 +32,8 @@ public class PieOverlayMenu: UIViewController {
         }
     }
     weak public var delegate : PieOverlayMenuDelegate?
+    public private(set) var viewControllers: [UIViewController]
+    public private(set) var topViewController: UIViewController?
 
     // MARK: - Private properties -
     private let headerView : UIView = UIView()
@@ -42,7 +44,17 @@ public class PieOverlayMenu: UIViewController {
     private let footerLabel : UILabel = UILabel()
     private var viewsDictionary : [String:AnyObject]!
 
-    weak private var currentViewController: UIViewController?
+    // MARK: - Init methods -
+    public init(rootViewController: UIViewController) {
+        self.viewControllers = [rootViewController]
+        super.init(nibName: nil, bundle: nil)
+
+        self.changeContentController(viewControllers.last!, animated: false)
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Overrides -
     override public func viewDidLoad() {
@@ -57,48 +69,65 @@ public class PieOverlayMenu: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
-    public func changeContentController(viewController: UIViewController) {
-        currentViewController?.willMoveToParentViewController(nil)
-        viewController.view.translatesAutoresizingMaskIntoConstraints = false
-        self.addChildViewController(viewController)
-        self.addSubview(viewController.view, toView:self.contentView)
-        self.currentViewController?.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
-        viewController.view.alpha = 1
-        viewController.view.transform = CGAffineTransformMakeScale(1.0, 0.01)
-        viewController.view.layoutIfNeeded()
+    public func pushViewController(viewController: UIViewController, animated: Bool) {
+        // TODO: Maybe append only if it's not in the stack already otherwise throw exception
+        self.viewControllers.append(viewController)
+        self.changeContentController(viewControllers.last!, animated: animated)
+    }
 
-        UIView.animateWithDuration(1.0,
-                                   delay: 0.0,
-                                   usingSpringWithDamping: 0.6,
-                                   initialSpringVelocity: 10.0,
-//        UIView.animateWithDuration(0.5,
-//                                   delay: 0.0,
-                                   options: UIViewAnimationOptions.CurveEaseInOut,
-                                   animations: {
-            //            self.currentViewController?.view.alpha = 0
-            self.currentViewController?.view.transform = CGAffineTransformMakeScale(1.0, 0.01)
-            viewController.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
-            viewController.view.alpha = 1
-        }) { _ in
-            //            UIView.animateWithDuration(0.5, animations: {
-            //
-            //                }, completion: { finished in
-            self.currentViewController?.view.removeFromSuperview()
-            self.currentViewController?.removeFromParentViewController()
-            (viewController as? PieOverlayMenuContentView)?.overlayMenu = self
-            self.currentViewController = viewController
-            self.dataSourceUpdate()
-            viewController.didMoveToParentViewController(self)
-            //            })
+    public func popViewControllerAnimated(animated: Bool) -> UIViewController? {
+        if self.viewControllers.count > 1 {
+            let poppedViewController = self.viewControllers.popLast()
+            self.changeContentController(viewControllers.last!, animated: animated)
+            return poppedViewController
         }
+        return nil
     }
 
     // MARK: - Internal methods -
+    private func changeContentController(viewController: UIViewController, animated : Bool = true) {
+        topViewController?.willMoveToParentViewController(nil)
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+        self.addChildViewController(viewController)
+        self.addSubview(viewController.view, toView:self.contentView)
+
+        if animated {
+            self.topViewController?.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            viewController.view.alpha = 1
+            viewController.view.transform = CGAffineTransformMakeScale(1.0, 0.01)
+            viewController.view.layoutIfNeeded()
+            UIView
+                .animateWithDuration(1.0,
+                                     delay: 0.0,
+                                     usingSpringWithDamping: 0.6,
+                                     initialSpringVelocity: 10.0,
+                                     options: UIViewAnimationOptions.CurveEaseInOut,
+                                     animations: {
+                                        self.topViewController?.view.transform = CGAffineTransformMakeScale(1.0, 0.01)
+                                        viewController.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                                        viewController.view.alpha = 1
+                }) { _ in
+                    self.replaceCurrentViewController(viewController)
+            }
+        } else {
+            self.replaceCurrentViewController(viewController)
+        }
+    }
+
+    private func replaceCurrentViewController(viewController: UIViewController) {
+        self.topViewController?.view.removeFromSuperview()
+        self.topViewController?.removeFromParentViewController()
+        (viewController as? PieOverlayMenuContentView)?.overlayMenu = self
+        self.topViewController = viewController
+        self.dataSourceUpdate()
+        viewController.didMoveToParentViewController(self)
+    }
+
     private func dataSourceUpdate() {
         guard let dataSource = self.dataSource else { return }
 
-        headerLabel.text = dataSource.overlayMenuTitleForHeader(self.currentViewController)
-        footerLabel.text = dataSource.overlayMenuTitleForFooter(self.currentViewController)
+        headerLabel.text = dataSource.overlayMenuTitleForHeader(self.topViewController)
+        footerLabel.text = dataSource.overlayMenuTitleForFooter(self.topViewController)
     }
 
     private func addSubview(subView:UIView, toView parentView:UIView) {
@@ -171,7 +200,7 @@ public class PieOverlayMenu: UIViewController {
     private func setupContentAndFooterViews() {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         //        contentView.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.2)
-        contentView.clipsToBounds = true
+//        contentView.clipsToBounds = true
         contentView.accessibilityIdentifier = "contentView"
         self.view.addSubview(contentView)
 
@@ -206,7 +235,7 @@ public class PieOverlayMenu: UIViewController {
         view.addConstraints(footerViewConstraintsV)
         view.addConstraints(footerViewConstraintsH)
     }
-
+    
 }
 
 
