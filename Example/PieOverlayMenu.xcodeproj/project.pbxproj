@@ -16,7 +16,18 @@
 		A8A59FEA1D61DEBD0073D175 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A59FE91D61DEBD0073D175 /* MenuViewController.swift */; };
 		A8A59FEC1D61EE0D0073D175 /* PieOverlayMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A59FEB1D61EE0D0073D175 /* PieOverlayMenu.swift */; };
 		A8A59FEE1D61FEDA0073D175 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8A59FED1D61FEDA0073D175 /* Media.xcassets */; };
+		A8BD722F1D65BBB00085178A /* PieOverlayMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BD722E1D65BBB00085178A /* PieOverlayMenuTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A8BD72311D65BBB00085178A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A8A59FCB1D61D6470073D175 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A8A59FD21D61D6470073D175;
+			remoteInfo = PieOverlayMenu;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		A883B3501D64C0C50034B201 /* OtherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherViewController.swift; sourceTree = "<group>"; };
@@ -30,10 +41,20 @@
 		A8A59FE91D61DEBD0073D175 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		A8A59FEB1D61EE0D0073D175 /* PieOverlayMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PieOverlayMenu.swift; path = ../Source/PieOverlayMenu.swift; sourceTree = "<group>"; };
 		A8A59FED1D61FEDA0073D175 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = ../Source/Media.xcassets; sourceTree = "<group>"; };
+		A8BD722C1D65BBAF0085178A /* PieOverlayMenuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PieOverlayMenuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8BD722E1D65BBB00085178A /* PieOverlayMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieOverlayMenuTests.swift; sourceTree = "<group>"; };
+		A8BD72301D65BBB00085178A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A8A59FD01D61D6470073D175 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A8BD72291D65BBAF0085178A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -48,6 +69,7 @@
 			children = (
 				A8A59FE81D61DE800073D175 /* Source */,
 				A8A59FD51D61D6470073D175 /* Example */,
+				A8BD722D1D65BBB00085178A /* PieOverlayMenuTests */,
 				A8A59FD41D61D6470073D175 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				A8A59FD31D61D6470073D175 /* PieOverlayMenu.app */,
+				A8BD722C1D65BBAF0085178A /* PieOverlayMenuTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -85,6 +108,15 @@
 			name = Source;
 			sourceTree = "<group>";
 		};
+		A8BD722D1D65BBB00085178A /* PieOverlayMenuTests */ = {
+			isa = PBXGroup;
+			children = (
+				A8BD722E1D65BBB00085178A /* PieOverlayMenuTests.swift */,
+				A8BD72301D65BBB00085178A /* Info.plist */,
+			);
+			path = PieOverlayMenuTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -105,6 +137,24 @@
 			productReference = A8A59FD31D61D6470073D175 /* PieOverlayMenu.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A8BD722B1D65BBAF0085178A /* PieOverlayMenuTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A8BD72331D65BBB00085178A /* Build configuration list for PBXNativeTarget "PieOverlayMenuTests" */;
+			buildPhases = (
+				A8BD72281D65BBAF0085178A /* Sources */,
+				A8BD72291D65BBAF0085178A /* Frameworks */,
+				A8BD722A1D65BBAF0085178A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A8BD72321D65BBB00085178A /* PBXTargetDependency */,
+			);
+			name = PieOverlayMenuTests;
+			productName = PieOverlayMenuTests;
+			productReference = A8BD722C1D65BBAF0085178A /* PieOverlayMenuTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -117,6 +167,10 @@
 				TargetAttributes = {
 					A8A59FD21D61D6470073D175 = {
 						CreatedOnToolsVersion = 7.3.1;
+					};
+					A8BD722B1D65BBAF0085178A = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = A8A59FD21D61D6470073D175;
 					};
 				};
 			};
@@ -134,6 +188,7 @@
 			projectRoot = "";
 			targets = (
 				A8A59FD21D61D6470073D175 /* PieOverlayMenu */,
+				A8BD722B1D65BBAF0085178A /* PieOverlayMenuTests */,
 			);
 		};
 /* End PBXProject section */
@@ -147,6 +202,13 @@
 				A8A59FDE1D61D6470073D175 /* Assets.xcassets in Resources */,
 				A8A59FEE1D61FEDA0073D175 /* Media.xcassets in Resources */,
 				A8A59FDC1D61D6470073D175 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A8BD722A1D65BBAF0085178A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,7 +227,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A8BD72281D65BBAF0085178A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A8BD722F1D65BBB00085178A /* PieOverlayMenuTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A8BD72321D65BBB00085178A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A8A59FD21D61D6470073D175 /* PieOverlayMenu */;
+			targetProxy = A8BD72311D65BBB00085178A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		A8A59FDA1D61D6470073D175 /* Main.storyboard */ = {
@@ -294,6 +372,30 @@
 			};
 			name = Release;
 		};
+		A8BD72341D65BBB00085178A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = PieOverlayMenuTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.piemapping.PieOverlayMenuTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PieOverlayMenu.app/PieOverlayMenu";
+			};
+			name = Debug;
+		};
+		A8BD72351D65BBB00085178A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = PieOverlayMenuTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.piemapping.PieOverlayMenuTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PieOverlayMenu.app/PieOverlayMenu";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -314,6 +416,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		A8BD72331D65BBB00085178A /* Build configuration list for PBXNativeTarget "PieOverlayMenuTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A8BD72341D65BBB00085178A /* Debug */,
+				A8BD72351D65BBB00085178A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

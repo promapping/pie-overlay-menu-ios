@@ -45,5 +45,5 @@ extension MenuViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionCellID", forIndexPath: indexPath)
         return cell
     }
-    
+
 }
