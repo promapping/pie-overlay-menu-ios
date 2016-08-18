@@ -1,4 +1,5 @@
-# PieOverlayMenu
+# PieOverlayMenu 
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/piemapping/pie-overlay-menu-ios/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/piemapping/pie-overlay-menu-ios.svg?branch=master)](https://travis-ci.org/piemapping/pie-overlay-menu-ios)
 [![codecov](https://codecov.io/gh/piemapping/pie-overlay-menu-ios/branch/master/graph/badge.svg)](https://codecov.io/gh/piemapping/pie-overlay-menu-ios)
 [![codebeat badge](https://codebeat.co/badges/152f11a3-7639-4977-832d-6ee34cf1c911)](https://codebeat.co/projects/github-com-piemapping-pie-overlay-menu-ios)
