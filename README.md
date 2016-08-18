@@ -45,7 +45,7 @@ Anas AIT ALI
 - [Github](https://github.com/anas10)
 - [Twitter](https://twitter.com/anasaitali)
 - [Website](http://aitali.co/)
-- [Email](contact@aitali.co)
+- contact[at]aitali.co
 
 ## License
 
