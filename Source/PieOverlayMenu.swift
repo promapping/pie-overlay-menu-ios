@@ -128,11 +128,9 @@ public class PieOverlayMenu: UIViewController {
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
         self.addChildViewController(viewController)
         self.contentView.addSubview(viewController.view)
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[subView]|",
-            options: [], metrics: nil, views: ["subView":viewController.view]))
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[subView]|",
-            options: [], metrics: nil, views: ["subView":viewController.view]))
-
+        let viewsDict = ["subView":viewController.view]
+        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[subView]|", options: [], metrics: nil, views: viewsDict))
+        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[subView]|", options: [], metrics: nil, views: viewsDict))
 
         if animated {
             animateChangeContentViewController(viewController)
@@ -204,32 +202,32 @@ public class PieOverlayMenu: UIViewController {
 
     private func setupHeaderViewConstraints() {
         headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[closeButton]-0-|",
-                options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary))
+                options: [], metrics: nil, views: viewsDictionary))
         headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-18-[closeButton]",
-                options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary))
+                options: [], metrics: nil, views: viewsDictionary))
         headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[headerLabel]-0-|",
-                options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary))
+                options: [], metrics: nil, views: viewsDictionary))
         headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[closeButton]-32-[headerLabel]",
-                options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary))
+                options: [], metrics: nil, views: viewsDictionary))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide]-[headerView(50)]",
-                options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary))
+                options: [], metrics: nil, views: viewsDictionary))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[headerView]-0-|",
-                options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary))
+                options: [], metrics: nil, views: viewsDictionary))
     }
 
     private func setupContentAndFooterViewsConstraints() {
         footerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[footerLabel]-0-|",
-            options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary))
+            options: [], metrics: nil, views: viewsDictionary))
         footerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[footerLabel]-0-|",
-            options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary))
+            options: [], metrics: nil, views: viewsDictionary))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[headerView]-50-[contentView]-75-[footerView]",
-                options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary))
+                options: [], metrics: nil, views: viewsDictionary))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-100-[contentView]-100-|",
-                options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary))
+                options: [], metrics: nil, views: viewsDictionary))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[footerView(50)]-0-|",
-                options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary))
+                options: [], metrics: nil, views: viewsDictionary))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[footerView]-0-|",
-                options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary))
+                options: [], metrics: nil, views: viewsDictionary))
     }
     
 }
