@@ -63,6 +63,7 @@
 		A8A59FD51D61D6470073D175 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				A883B3501D64C0C50034B201 /* OtherViewController.swift */,
 				A8A59FE91D61DEBD0073D175 /* MenuViewController.swift */,
 				A8A59FD61D61D6470073D175 /* AppDelegate.swift */,
 				A8A59FD81D61D6470073D175 /* ViewController.swift */,
@@ -70,7 +71,6 @@
 				A8A59FDD1D61D6470073D175 /* Assets.xcassets */,
 				A8A59FDF1D61D6470073D175 /* LaunchScreen.storyboard */,
 				A8A59FE21D61D6470073D175 /* Info.plist */,
-				A883B3501D64C0C50034B201 /* OtherViewController.swift */,
 			);
 			name = Example;
 			path = PieOverlayMenu;

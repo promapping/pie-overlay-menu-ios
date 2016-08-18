@@ -27,7 +27,12 @@ class OtherViewController: UIViewController, PieOverlayMenuContentView {
     }
     
     @IBAction func previousView(sender: AnyObject) {
-        overlayMenu?.popViewControllerAnimated(true)
+//        overlayMenu?.popViewControllerAnimated(true)
+        if let overlayMenu = overlayMenu {
+            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let menuVC = storyboard.instantiateViewControllerWithIdentifier("MenuViewControllerID")
+            overlayMenu.pushViewController(menuVC, animated: true)
+        }
     }
 
     /*

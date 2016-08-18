@@ -91,7 +91,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="contentView" destination="KrA-oJ-EG8" id="SN2-aJ-Pty"/>
+                        <outlet property="contentView" destination="KrA-oJ-EG8" id="rVN-ki-pe5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YSd-Hr-DxA" userLabel="First Responder" sceneMemberID="firstResponder"/>

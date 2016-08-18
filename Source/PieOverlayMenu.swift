@@ -84,6 +84,16 @@ public class PieOverlayMenu: UIViewController {
         return nil
     }
 
+    public func popToRootViewControllerAnimated(animated: Bool) -> [UIViewController]? {
+        guard viewControllers.count > 1 else { return nil }
+        var ret: [UIViewController] = []
+        for _ in 0..<viewControllers.count-1 {
+            ret.append(viewControllers.popLast()!)
+        }
+        self.changeContentController(viewControllers.last!, animated: animated)
+        return ret
+    }
+
     // MARK: - Internal methods -
     private func changeContentController(viewController: UIViewController, animated : Bool = true) {
         topViewController?.willMoveToParentViewController(nil)

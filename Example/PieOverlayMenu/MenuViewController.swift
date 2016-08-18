@@ -24,10 +24,14 @@ class MenuViewController: UIViewController, PieOverlayMenuContentView {
 
 extension MenuViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("item selected \(indexPath.row)")
-        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let aVC = storyboard.instantiateViewControllerWithIdentifier("AViewControllerID")
-        overlayMenu?.pushViewController(aVC, animated: true)
+//        print("item selected \(indexPath.row)")
+        if indexPath.row == 4 {
+            overlayMenu?.popToRootViewControllerAnimated(true)
+        } else {
+            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let aVC = storyboard.instantiateViewControllerWithIdentifier("AViewControllerID")
+            overlayMenu?.pushViewController(aVC, animated: true)
+        }
     }
 }
 
@@ -41,4 +45,5 @@ extension MenuViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionCellID", forIndexPath: indexPath)
         return cell
     }
+    
 }
