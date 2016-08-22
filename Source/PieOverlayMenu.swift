@@ -98,37 +98,6 @@ public class PieOverlayMenu: UIViewController {
         setupViews()
     }
 
-    // MARK: - Public methods -
-    public func close() {
-        delegate?.overlayMenuCloseButtonPressed?()
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-
-    public func pushViewController(viewController: UIViewController, animated: Bool) {
-        // TODO: Maybe append only if it's not in the stack already otherwise throw exception
-        self.viewControllers.append(viewController)
-        self.changeContentController(viewControllers.last!, animated: animated)
-    }
-
-    public func popViewControllerAnimated(animated: Bool) -> UIViewController? {
-        if self.viewControllers.count > 1 {
-            let poppedViewController = self.viewControllers.popLast()
-            self.changeContentController(viewControllers.last!, animated: animated)
-            return poppedViewController
-        }
-        return nil
-    }
-
-    public func popToRootViewControllerAnimated(animated: Bool) -> [UIViewController]? {
-        guard viewControllers.count > 1 else { return nil }
-        var ret: [UIViewController] = []
-        for _ in 0..<viewControllers.count-1 {
-            ret.append(viewControllers.popLast()!)
-        }
-        self.changeContentController(viewControllers.last!, animated: animated)
-        return ret
-    }
-
     // MARK: - Internal methods -
     private func changeContentController(viewController: UIViewController, animated : Bool = true) {
         topViewController?.willMoveToParentViewController(nil)
@@ -139,11 +108,7 @@ public class PieOverlayMenu: UIViewController {
         [NSLayoutConstraint.constraintsWithVisualFormat("H:|[subView]|", options: [], metrics: nil, views: viewsDict),
             NSLayoutConstraint.constraintsWithVisualFormat("V:|[subView]|", options: [], metrics: nil, views: viewsDict)
             ].forEach { NSLayoutConstraint.activateConstraints($0) }
-        if animated {
-            animateChangeContentViewController(viewController)
-        } else {
-            self.replaceCurrentViewController(viewController)
-        }
+        animated ? animateChangeContentViewController(viewController) : self.replaceCurrentViewController(viewController)
     }
 
     private func animateChangeContentViewController(viewController: UIViewController) {
@@ -236,6 +201,39 @@ public class PieOverlayMenu: UIViewController {
             bundle = podBundle
         }
         return bundle
+    }
+}
+
+extension PieOverlayMenu {
+    // MARK: - Public methods -
+    public func close() {
+        delegate?.overlayMenuCloseButtonPressed?()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    public func pushViewController(viewController: UIViewController, animated: Bool) {
+        // TODO: Maybe append only if it's not in the stack already otherwise throw exception
+        self.viewControllers.append(viewController)
+        self.changeContentController(viewControllers.last!, animated: animated)
+    }
+
+    public func popViewControllerAnimated(animated: Bool) -> UIViewController? {
+        if self.viewControllers.count > 1 {
+            let poppedViewController = self.viewControllers.popLast()
+            self.changeContentController(viewControllers.last!, animated: animated)
+            return poppedViewController
+        }
+        return nil
+    }
+
+    public func popToRootViewControllerAnimated(animated: Bool) -> [UIViewController]? {
+        guard viewControllers.count > 1 else { return nil }
+        var ret: [UIViewController] = []
+        for _ in 0..<viewControllers.count-1 {
+            ret.append(viewControllers.popLast()!)
+        }
+        self.changeContentController(viewControllers.last!, animated: animated)
+        return ret
     }
 }
 
