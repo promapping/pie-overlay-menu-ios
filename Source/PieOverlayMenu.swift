@@ -18,6 +18,7 @@ public protocol PieOverlayMenuContentView: class {
 public class PieOverlayMenu: UIViewController {
 
     // MARK: - Public properties -
+    public static let sharedInstance = PieOverlayMenu()
     public var dataSource : PieOverlayMenuDataSource? {
         didSet {
             dataSourceUpdate()
@@ -37,7 +38,8 @@ public class PieOverlayMenu: UIViewController {
         let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
-        btn.setImage(UIImage(named: "menu_close_button"), forState: UIControlState.Normal)
+        let image = UIImage(named: "menu_close_button", inBundle: PieOverlayMenu.getPieOverlayMenuResourcesBundle(), compatibleWithTraitCollection: nil)
+        btn.setImage(image, forState: UIControlState.Normal)
         return btn
     }()
     private let headerLabel : UILabel = {
@@ -68,6 +70,11 @@ public class PieOverlayMenu: UIViewController {
     private var viewsDictionary : [String:AnyObject]!
 
     // MARK: - Init methods -
+    public init() {
+        self.viewControllers = []
+        super.init(nibName: nil, bundle: nil)
+    }
+
     public init(rootViewController: UIViewController) {
         self.viewControllers = [rootViewController]
         super.init(nibName: nil, bundle: nil)
@@ -129,9 +136,9 @@ public class PieOverlayMenu: UIViewController {
         self.addChildViewController(viewController)
         self.contentView.addSubview(viewController.view)
         let viewsDict = ["subView":viewController.view]
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[subView]|", options: [], metrics: nil, views: viewsDict))
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[subView]|", options: [], metrics: nil, views: viewsDict))
-
+        [NSLayoutConstraint.constraintsWithVisualFormat("H:|[subView]|", options: [], metrics: nil, views: viewsDict),
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|[subView]|", options: [], metrics: nil, views: viewsDict)
+            ].forEach { NSLayoutConstraint.activateConstraints($0) }
         if animated {
             animateChangeContentViewController(viewController)
         } else {
@@ -201,40 +208,34 @@ public class PieOverlayMenu: UIViewController {
     }
 
     private func setupHeaderViewConstraints() {
-        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[closeButton]-0-|",
-                options: [], metrics: nil, views: viewsDictionary))
-        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-18-[closeButton]",
-                options: [], metrics: nil, views: viewsDictionary))
-        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[headerLabel]-0-|",
-                options: [], metrics: nil, views: viewsDictionary))
-        headerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[closeButton]-32-[headerLabel]",
-                options: [], metrics: nil, views: viewsDictionary))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide]-[headerView(50)]",
-                options: [], metrics: nil, views: viewsDictionary))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[headerView]-0-|",
-                options: [], metrics: nil, views: viewsDictionary))
+        [NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[closeButton]-0-|", options: [], metrics: nil, views: viewsDictionary),
+            NSLayoutConstraint.constraintsWithVisualFormat("H:|-18-[closeButton]", options: [], metrics: nil, views: viewsDictionary),
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[headerLabel]-0-|", options: [], metrics: nil, views: viewsDictionary),
+            NSLayoutConstraint.constraintsWithVisualFormat("H:[closeButton]-32-[headerLabel]", options: [], metrics: nil, views: viewsDictionary),
+            NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide]-[headerView(50)]", options: [], metrics: nil, views: viewsDictionary),
+            NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[headerView]-0-|", options: [], metrics: nil, views: viewsDictionary)
+            ].forEach { NSLayoutConstraint.activateConstraints($0) }
     }
 
     private func setupContentAndFooterViewsConstraints() {
-        footerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[footerLabel]-0-|",
-            options: [], metrics: nil, views: viewsDictionary))
-        footerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[footerLabel]-0-|",
-            options: [], metrics: nil, views: viewsDictionary))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[headerView]-50-[contentView]-75-[footerView]",
-                options: [], metrics: nil, views: viewsDictionary))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-100-[contentView]-100-|",
-                options: [], metrics: nil, views: viewsDictionary))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[footerView(50)]-0-|",
-                options: [], metrics: nil, views: viewsDictionary))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[footerView]-0-|",
-                options: [], metrics: nil, views: viewsDictionary))
+        [NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[footerLabel]-0-|", options: [], metrics: nil, views: viewsDictionary),
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[footerLabel]-0-|", options: [], metrics: nil, views: viewsDictionary),
+            NSLayoutConstraint.constraintsWithVisualFormat("V:[headerView]-50-[contentView]-75-[footerView]", options: [], metrics: nil, views: viewsDictionary),
+            NSLayoutConstraint.constraintsWithVisualFormat("H:|-100-[contentView]-100-|", options: [], metrics: nil, views: viewsDictionary),
+            NSLayoutConstraint.constraintsWithVisualFormat("V:[footerView(50)]-0-|", options: [], metrics: nil, views: viewsDictionary),
+            NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[footerView]-0-|", options: [], metrics: nil, views: viewsDictionary)
+            ].forEach { NSLayoutConstraint.activateConstraints($0) }
     }
-    
+
+    private static func getPieOverlayMenuResourcesBundle() -> NSBundle? {
+        let podBundle = NSBundle(forClass: PieOverlayMenu.self)
+        let bundle : NSBundle?
+        if let bundleURL = podBundle.URLForResource("PieOverlayMenu", withExtension: "bundle") {
+            bundle = NSBundle(URL: bundleURL)
+        } else {
+            bundle = podBundle
+        }
+        return bundle
+    }
 }
-
-
-
-
-
-
 

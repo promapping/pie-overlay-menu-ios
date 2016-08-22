@@ -30,21 +30,10 @@ class ViewController: UIViewController {
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let menuVC = storyboard.instantiateViewControllerWithIdentifier("MenuViewControllerID")
 
-        let vc = PieOverlayMenu(rootViewController: menuVC)
-        vc.dataSource = self
+        self.pieOverlayMenu.pushViewController(menuVC, animated: false)
+        self.pieOverlayMenu.dataSource = self
 
-//        let triggerTime = (Int64(NSEC_PER_SEC) * 3)
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime), dispatch_get_main_queue(), { () -> Void in
-//            let aVC = storyboard.instantiateViewControllerWithIdentifier("AViewControllerID")
-//            vc.changeContentController(aVC)
-//        })
-//
-//        let triggerTime2 = (Int64(NSEC_PER_SEC) * 6)
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, triggerTime2), dispatch_get_main_queue(), { () -> Void in
-//            vc.changeContentController(menuVC)
-//        })
-
-        self.presentViewController(vc, animated: true, completion: nil)
+        self.openPieOverlayMenu()
     }
 
 }
