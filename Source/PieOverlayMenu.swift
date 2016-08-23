@@ -93,6 +93,7 @@ public class PieOverlayMenu: UIViewController {
         self.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
         self.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         self.view.backgroundColor = UIColor(red: 67/255, green: 75/255, blue: 90/255, alpha: 1.0)
+        // You need to set UIViewControllerBasedStatusBarAppearance to NO in your info.plist
         UIApplication.sharedApplication().statusBarStyle = .LightContent
 
         setupViews()
