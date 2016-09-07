@@ -18,7 +18,8 @@ public protocol PieOverlayMenuContentView: class {
 public class PieOverlayMenu: UIViewController {
 
     // MARK: - Public properties -
-    public static let sharedInstance = PieOverlayMenu()
+    private static var privateShared : PieOverlayMenu?
+
     public var dataSource : PieOverlayMenuDataSource? {
         didSet {
             dataSourceUpdate()
@@ -207,6 +208,17 @@ public class PieOverlayMenu: UIViewController {
 
 extension PieOverlayMenu {
     // MARK: - Public methods -
+    public class func sharedInstance() -> PieOverlayMenu {
+        if PieOverlayMenu.privateShared == nil {
+            PieOverlayMenu.privateShared = PieOverlayMenu()
+        }
+        return PieOverlayMenu.privateShared!
+    }
+
+    public class func dispose() {
+        PieOverlayMenu.privateShared = nil
+    }
+
     public func close() {
         delegate?.overlayMenuCloseButtonPressed?()
         self.dismissViewControllerAnimated(true, completion: nil)

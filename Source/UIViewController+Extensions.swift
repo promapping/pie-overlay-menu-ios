@@ -10,7 +10,7 @@ import UIKit
 
 extension UIViewController {
     public var pieOverlayMenu : PieOverlayMenu {
-        return PieOverlayMenu.sharedInstance
+        return PieOverlayMenu.sharedInstance()
     }
 
     public func openPieOverlayMenu() {
