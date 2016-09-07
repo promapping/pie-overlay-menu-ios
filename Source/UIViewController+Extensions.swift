@@ -13,7 +13,7 @@ extension UIViewController {
         return PieOverlayMenu.sharedInstance()
     }
 
-    public func openPieOverlayMenu() {
-        self.presentViewController(self.pieOverlayMenu, animated: true, completion: nil)
+    public func openPieOverlayMenu(animated: Bool = true) {
+        self.presentViewController(self.pieOverlayMenu, animated: animated, completion: nil)
     }
 }
