@@ -248,5 +248,12 @@ extension PieOverlayMenu {
         self.changeContentController(viewControllers.last!, animated: animated)
         return ret
     }
+
+    public func setViewControllers(viewControllers: [UIViewController], animated: Bool) {
+        if viewControllers.count > 0 {
+            self.viewControllers = viewControllers
+            self.changeContentController(viewControllers.last!, animated: animated)
+        }
+    }
 }
 
