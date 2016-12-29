@@ -9,11 +9,11 @@
 import UIKit
 
 extension UIViewController {
-    public var pieOverlayMenu : PieOverlayMenu {
-        return PieOverlayMenu.sharedInstance()
-    }
-
-    public func openPieOverlayMenu(animated: Bool = true) {
-        self.presentViewController(self.pieOverlayMenu, animated: animated, completion: nil)
-    }
+//    public var pieOverlayMenu : PieOverlayMenu {
+//        return PieOverlayMenu.sharedInstance()
+//    }
+//
+//    public func openPieOverlayMenu(animated: Bool = true) {
+//        self.presentViewController(self.pieOverlayMenu, animated: animated, completion: nil)
+//    }
 }

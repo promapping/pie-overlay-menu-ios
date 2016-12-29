@@ -8,11 +8,9 @@
 
 import UIKit
 
-class MenuViewController: UIViewController, PieOverlayMenuContentView {
+class MenuViewController: PieOverlayMenuContentViewController {
 
     @IBOutlet weak var contentView: UIView!
-
-    var overlayMenu: PieOverlayMenu?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,13 +22,15 @@ class MenuViewController: UIViewController, PieOverlayMenuContentView {
 
 extension MenuViewController: UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        print("item selected \(indexPath.row)")
-        if indexPath.row == 4 {
-            overlayMenu?.popToRootViewControllerAnimated(true)
-        } else {
-            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let aVC = storyboard.instantiateViewControllerWithIdentifier("AViewControllerID")
-            overlayMenu?.pushViewController(aVC, animated: true)
+        if let pieOverlayMenu = self.pieOverlayMenu()?.getMenuViewController() {
+            print("item selected \(indexPath.row)")
+            if indexPath.row == 4 {
+                pieOverlayMenu.popToRootViewControllerAnimated(true)
+            } else {
+                let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let aVC = storyboard.instantiateViewControllerWithIdentifier("AViewControllerID")
+                pieOverlayMenu.pushViewController(aVC, animated: true)
+            }
         }
     }
 }
@@ -45,5 +45,5 @@ extension MenuViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionCellID", forIndexPath: indexPath)
         return cell
     }
-
+    
 }

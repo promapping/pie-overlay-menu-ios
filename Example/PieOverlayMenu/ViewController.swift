@@ -27,13 +27,14 @@ class ViewController: UIViewController {
     }
 
     @IBAction func showMenu(sender: AnyObject) {
-        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let menuVC = storyboard.instantiateViewControllerWithIdentifier("MenuViewControllerID")
-
-        self.pieOverlayMenu.pushViewController(menuVC, animated: false)
-        self.pieOverlayMenu.dataSource = self
-
-        self.openPieOverlayMenu()
+        self.pieOverlayMenu()?.showMenu(false)
+//        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let menuVC = storyboard.instantiateViewControllerWithIdentifier("MenuViewControllerID")
+//
+//        self.pieOverlayMenu.pushViewController(menuVC, animated: false)
+//        self.pieOverlayMenu.dataSource = self
+//
+//        self.openPieOverlayMenu()
     }
 
 }

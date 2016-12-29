@@ -8,9 +8,7 @@
 
 import UIKit
 
-class OtherViewController: UIViewController, PieOverlayMenuContentView {
-
-    var overlayMenu: PieOverlayMenu?
+class OtherViewController: UIViewController {
 
     @IBOutlet weak var contentView: UIView!
 
@@ -28,7 +26,7 @@ class OtherViewController: UIViewController, PieOverlayMenuContentView {
     
     @IBAction func previousView(sender: AnyObject) {
 //        overlayMenu?.popViewControllerAnimated(true)
-        if let overlayMenu = overlayMenu {
+        if let overlayMenu = self.pieOverlayMenu()?.getMenuViewController() {
             let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let menuVC = storyboard.instantiateViewControllerWithIdentifier("MenuViewControllerID")
             overlayMenu.pushViewController(menuVC, animated: true)
