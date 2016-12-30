@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func showMenu(sender: AnyObject) {
+        self.pieOverlayMenu()?.getMenuViewController()?.dataSource = self
         self.pieOverlayMenu()?.showMenu(false)
 //        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
 //        let menuVC = storyboard.instantiateViewControllerWithIdentifier("MenuViewControllerID")

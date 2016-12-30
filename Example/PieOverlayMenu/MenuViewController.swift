@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MenuViewController: PieOverlayMenuContentViewController {
+class MenuViewController: UIViewController {
 
     @IBOutlet weak var contentView: UIView!
 

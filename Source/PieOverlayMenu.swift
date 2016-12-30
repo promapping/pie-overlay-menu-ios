@@ -27,12 +27,12 @@ public class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
         print("this is not handled yet")
     }
 
-    public init(contentViewController: UIViewController, menuViewController: PieOverlayMenuContentViewController) {
+    public init(contentViewController: UIViewController, menuViewController: UIViewController) {
         super.init(nibName: nil, bundle: nil)
 
         self.contentViewController = contentViewController
-        self.menuViewController = menuViewController
-        self.changeVisibleViewController(menuViewController)
+        self.menuViewController = PieOverlayMenuContentViewController(rootViewController: menuViewController)
+        self.changeVisibleViewController(contentViewController)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -56,13 +56,17 @@ public class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
 
     public func showMenu(animated: Bool) {
         //TODO: Implement animated
+        self.menuViewController?.viewWillAppear(animated)
         self.changeVisibleViewController(self.menuViewController!)
+        self.menuViewController?.viewDidAppear(animated)
     }
 
     public func closeMenu(animated: Bool) {
         //TODO: Implement animated
+        self.menuViewController?.viewWillDisappear(animated)
         self.changeVisibleViewController(self.contentViewController!)
-        self.menuViewController?.popToRootViewControllerAnimated(false)
+        self.menuViewController?.viewDidDisappear(animated)
+        self.menuViewController?.popToRootViewControllerAnimated(true)
     }
 
     public func getMenuViewController() -> PieOverlayMenuContentViewController? {

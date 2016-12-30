@@ -134,6 +134,7 @@ public class PieOverlayMenuContentViewController: UIViewController {
         // TODO: Reimplement this.
 //        (viewController as? PieOverlayMenuContentView)?.overlayMenu = self
         self.topViewController = viewController
+        // TODO: Call this dataSourceUpdate earlier
         self.dataSourceUpdate()
         viewController.didMoveToParentViewController(self)
     }
