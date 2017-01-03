@@ -50,8 +50,12 @@ public class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
 
     public func setContentViewController(viewController: UIViewController, animated: Bool) {
         //TODO: Implement animated
+        self.contentViewController?.viewWillDisappear(animated)
+        viewController.viewWillAppear(animated)
+        self.changeVisibleViewController(viewController)
+        self.contentViewController?.viewDidDisappear(animated)
+        viewController.viewDidAppear(animated)
         self.contentViewController = viewController
-        self.changeVisibleViewController(self.contentViewController!)
     }
 
     public func showMenu(animated: Bool) {
@@ -75,6 +79,10 @@ public class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
 }
 
 extension UIViewController {
+    public func pieOverlayMenuContent() -> PieOverlayMenuContentViewController? {
+        return self.pieOverlayMenu()?.getMenuViewController()
+    }
+
     public func pieOverlayMenu() -> PieOverlayMenuProtocol? {
         var iteration : UIViewController? = self.parentViewController
         if (iteration == nil) {
