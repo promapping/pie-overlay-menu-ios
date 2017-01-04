@@ -21,14 +21,14 @@ class MenuViewController: UIViewController {
 
 
 extension MenuViewController: UICollectionViewDelegate {
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let pieOverlayMenu = self.pieOverlayMenu()?.getMenuViewController() {
             print("item selected \(indexPath.row)")
             if indexPath.row == 4 {
-                pieOverlayMenu.popToRootViewControllerAnimated(true)
+                _ = pieOverlayMenu.popToRootViewControllerAnimated(true)
             } else {
                 let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let aVC = storyboard.instantiateViewControllerWithIdentifier("AViewControllerID")
+                let aVC = storyboard.instantiateViewController(withIdentifier: "AViewControllerID")
                 pieOverlayMenu.pushViewController(aVC, animated: true)
             }
         }
@@ -37,12 +37,12 @@ extension MenuViewController: UICollectionViewDelegate {
 
 extension MenuViewController: UICollectionViewDataSource {
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionCellID", forIndexPath: indexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCellID", for: indexPath)
         return cell
     }
     

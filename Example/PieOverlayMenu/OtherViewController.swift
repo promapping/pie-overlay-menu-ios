@@ -24,11 +24,11 @@ class OtherViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func previousView(sender: AnyObject) {
+    @IBAction func previousView(_ sender: AnyObject) {
 //        overlayMenu?.popViewControllerAnimated(true)
         if let overlayMenu = self.pieOverlayMenu()?.getMenuViewController() {
             let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let menuVC = storyboard.instantiateViewControllerWithIdentifier("MenuViewControllerID")
+            let menuVC = storyboard.instantiateViewController(withIdentifier: "MenuViewControllerID")
             overlayMenu.pushViewController(menuVC, animated: true)
         }
     }

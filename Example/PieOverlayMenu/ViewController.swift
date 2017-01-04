@@ -15,7 +15,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
 //        self.showMenu(self)
@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func showMenu(sender: AnyObject) {
+    @IBAction func showMenu(_ sender: AnyObject) {
         self.pieOverlayMenuContent()?.dataSource = self
         self.pieOverlayMenu()?.showMenu(false)
 //        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -42,8 +42,8 @@ class ViewController: UIViewController {
 
 extension ViewController : PieOverlayMenuDataSource {
 
-    func overlayMenuTitleForFooter(currentViewController: UIViewController?) -> String? {
-        if let dict = NSBundle.mainBundle().infoDictionary {
+    func overlayMenuTitleForFooter(_ currentViewController: UIViewController?) -> String? {
+        if let dict = Bundle.main.infoDictionary {
             if let version = dict["CFBundleShortVersionString"] as? String,
                 let bundleVersion = dict["CFBundleVersion"] as? String,
                 let appName = dict["CFBundleName"] as? String {
@@ -53,7 +53,7 @@ extension ViewController : PieOverlayMenuDataSource {
         return nil
     }
 
-    func overlayMenuTitleForHeader(currentViewController: UIViewController?) -> String? {
+    func overlayMenuTitleForHeader(_ currentViewController: UIViewController?) -> String? {
         switch currentViewController {
         case is MenuViewController:
             return "Menu"

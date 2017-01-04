@@ -9,17 +9,17 @@
 import UIKit
 
 public protocol PieOverlayMenuProtocol {
-    func setContentViewController(viewController: UIViewController, animated: Bool)
-    func showMenu(animated: Bool)
-    func closeMenu(animated: Bool)
+    func setContentViewController(_ viewController: UIViewController, animated: Bool)
+    func showMenu(_ animated: Bool)
+    func closeMenu(_ animated: Bool)
     func getMenuViewController() -> PieOverlayMenuContentViewController?
 }
 
-public class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
+open class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
 
-    public private(set) var contentViewController: UIViewController?
-    public private(set) var menuViewController: PieOverlayMenuContentViewController?
-    private var visibleViewController: UIViewController?
+    open fileprivate(set) var contentViewController: UIViewController?
+    open fileprivate(set) var menuViewController: PieOverlayMenuContentViewController?
+    fileprivate var visibleViewController: UIViewController?
 
     // MARK: - Init methods -
     public init() {
@@ -39,16 +39,16 @@ public class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func changeVisibleViewController(viewController: UIViewController) {
-        visibleViewController?.willMoveToParentViewController(nil)
+    fileprivate func changeVisibleViewController(_ viewController: UIViewController) {
+        visibleViewController?.willMove(toParentViewController: nil)
         self.addChildViewController(viewController)
         self.view.addSubview(viewController.view)
         visibleViewController?.view.removeFromSuperview()
         visibleViewController?.removeFromParentViewController()
-        viewController.didMoveToParentViewController(self)
+        viewController.didMove(toParentViewController: self)
     }
 
-    public func setContentViewController(viewController: UIViewController, animated: Bool) {
+    open func setContentViewController(_ viewController: UIViewController, animated: Bool) {
         //TODO: Implement animated
         self.contentViewController?.viewWillDisappear(animated)
         viewController.viewWillAppear(animated)
@@ -58,22 +58,22 @@ public class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
         self.contentViewController = viewController
     }
 
-    public func showMenu(animated: Bool) {
+    open func showMenu(_ animated: Bool) {
         //TODO: Implement animated
         self.menuViewController?.viewWillAppear(animated)
         self.changeVisibleViewController(self.menuViewController!)
         self.menuViewController?.viewDidAppear(animated)
     }
 
-    public func closeMenu(animated: Bool) {
+    open func closeMenu(_ animated: Bool) {
         //TODO: Implement animated
         self.menuViewController?.viewWillDisappear(animated)
         self.changeVisibleViewController(self.contentViewController!)
         self.menuViewController?.viewDidDisappear(animated)
-        self.menuViewController?.popToRootViewControllerAnimated(true)
+        _ = self.menuViewController?.popToRootViewControllerAnimated(true)
     }
 
-    public func getMenuViewController() -> PieOverlayMenuContentViewController? {
+    open func getMenuViewController() -> PieOverlayMenuContentViewController? {
         return self.menuViewController
     }
 }
@@ -84,15 +84,15 @@ extension UIViewController {
     }
 
     public func pieOverlayMenu() -> PieOverlayMenuProtocol? {
-        var iteration : UIViewController? = self.parentViewController
+        var iteration : UIViewController? = self.parent
         if (iteration == nil) {
             return topMostController()
         }
         repeat {
             if (iteration is PieOverlayMenuProtocol) {
                 return iteration as? PieOverlayMenuProtocol
-            } else if (iteration?.parentViewController != nil && iteration?.parentViewController != iteration) {
-                iteration = iteration!.parentViewController
+            } else if (iteration?.parent != nil && iteration?.parent != iteration) {
+                iteration = iteration!.parent
             } else {
                 iteration = nil
             }
@@ -102,7 +102,7 @@ extension UIViewController {
     }
 
     internal func topMostController () -> PieOverlayMenuProtocol? {
-        var topController : UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController
+        var topController : UIViewController? = UIApplication.shared.keyWindow?.rootViewController
         if (topController is UITabBarController) {
             topController = (topController as! UITabBarController).selectedViewController
         }
