@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="ipad9_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Menu View Controller-->
@@ -15,15 +19,15 @@
                         <viewControllerLayoutGuide type="bottom" id="mca-ui-UQN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="eBe-cU-YBo">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KrA-oJ-EG8">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NAz-d9-h80">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="580"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="768" height="1004"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="70" minimumInteritemSpacing="100" id="G4d-4p-dxf">
                                             <size key="itemSize" width="170" height="170"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -48,11 +52,10 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZP8-9n-KYA">
                                                             <rect key="frame" x="0.0" y="140" width="170" height="30"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <constraints>
                                                     <constraint firstItem="ZP8-9n-KYA" firstAttribute="top" secondItem="W39-RV-924" secondAttribute="bottom" constant="30" id="1yB-An-YZj"/>
@@ -71,7 +74,7 @@
                                         </connections>
                                     </collectionView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.38431372549999998" green="0.41176470590000003" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.38431372549999998" green="0.41176470590000003" blue="0.45882352939999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration" identifier="Menu Content View"/>
                                 <constraints>
                                     <constraint firstItem="NAz-d9-h80" firstAttribute="top" secondItem="KrA-oJ-EG8" secondAttribute="top" id="Gcj-kP-Oy1"/>
@@ -81,7 +84,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <accessibility key="accessibilityConfiguration" identifier="MenuView"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="KrA-oJ-EG8" secondAttribute="trailing" id="FIC-xh-BiC"/>
@@ -90,6 +93,8 @@
                             <constraint firstItem="mca-ui-UQN" firstAttribute="top" secondItem="KrA-oJ-EG8" secondAttribute="bottom" id="pdo-cJ-G9Q"/>
                         </constraints>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="768" height="1024"/>
                     <connections>
                         <outlet property="contentView" destination="KrA-oJ-EG8" id="rVN-ki-pe5"/>
                     </connections>
@@ -107,35 +112,35 @@
                         <viewControllerLayoutGuide type="bottom" id="LQ2-UV-NQw"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="qy5-66-JAa">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vd3-QF-r2P">
-                                <rect key="frame" x="20" y="120" width="560" height="380"/>
+                                <rect key="frame" x="20" y="120" width="728" height="804"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other view" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oAN-m3-oYf">
-                                        <rect key="frame" x="239" y="180" width="83" height="21"/>
+                                        <rect key="frame" x="323" y="392" width="83" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tc1-f0-Ekg">
-                                        <rect key="frame" x="181" y="221" width="200" height="40"/>
-                                        <color key="backgroundColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                        <rect key="frame" x="265" y="433" width="200" height="40"/>
+                                        <color key="backgroundColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="0ow-E1-6PZ"/>
                                             <constraint firstAttribute="height" constant="40" id="rEH-rK-byJ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <state key="normal" title="Go to previous view">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="previousView:" destination="Z8b-bX-g8m" eventType="touchUpInside" id="6lg-TM-Zl3"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.38431372549999998" green="0.41176470590000003" blue="0.45882352939999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.38431372549999998" green="0.41176470590000003" blue="0.45882352939999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="oAN-m3-oYf" firstAttribute="centerX" secondItem="vd3-QF-r2P" secondAttribute="centerX" id="Btt-Uz-DAA"/>
                                     <constraint firstItem="Tc1-f0-Ekg" firstAttribute="centerX" secondItem="oAN-m3-oYf" secondAttribute="centerX" id="QhT-k5-TpS"/>
@@ -144,7 +149,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="vd3-QF-r2P" secondAttribute="trailing" id="Dsb-lf-4hN"/>
                             <constraint firstItem="vd3-QF-r2P" firstAttribute="top" secondItem="Ul0-lc-bUP" secondAttribute="bottom" constant="100" id="HTU-fE-0xp"/>
@@ -169,20 +174,20 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l2W-HJ-FcV">
-                                <rect key="frame" x="260" y="285" width="80" height="30"/>
+                                <rect key="frame" x="344" y="497" width="80" height="30"/>
                                 <state key="normal" title="Show menu">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="showMenu:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ch5-c5-4gY"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.1764705882" green="0.55294117649999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.1764705882" green="0.55294117649999996" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="l2W-HJ-FcV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="IBf-r2-gu5"/>
                             <constraint firstItem="l2W-HJ-FcV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="R9a-tL-hcf"/>
