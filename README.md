@@ -5,7 +5,7 @@
 
 Fullscreen overlay menu component developed in Swift
 
-*Screenshot coming soon*
+![Menu](Menu.png)
 
 ## Requirements
 * Xcode 7 or higher
@@ -33,7 +33,7 @@ Add the `Source` folder into your project.
 
 ## Usage
 
-TODO
+See example
 
 ## Contribution
 
