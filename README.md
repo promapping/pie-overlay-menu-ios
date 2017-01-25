@@ -5,7 +5,9 @@
 
 Fullscreen overlay menu component developed in Swift
 
-![Menu](Menu.png)
+Example 1 with dark blur   |  Example 2 without blur
+:-------------------------:|:-------------------------:
+![Menu](Menu1.png)         |  ![Menu](Menu.png)
 
 ## Requirements
 * Xcode 7 or higher

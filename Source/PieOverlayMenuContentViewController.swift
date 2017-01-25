@@ -14,6 +14,7 @@ public protocol PieOverlayMenuDataSource {
 open class PieOverlayMenuContentViewController: UIViewController {
 
     // MARK: - Public properties -
+    open var blurEffectStyle: UIBlurEffectStyle? = nil
     open var dataSource : PieOverlayMenuDataSource? {
         didSet {
             dataSourceUpdate()
@@ -24,6 +25,7 @@ open class PieOverlayMenuContentViewController: UIViewController {
     open fileprivate(set) var topViewController: UIViewController?
 
     // MARK: - Private properties -
+    fileprivate var backgroundImage : UIImageView = UIImageView()
     fileprivate let headerView : UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -33,6 +35,7 @@ open class PieOverlayMenuContentViewController: UIViewController {
         let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+        btn.alpha = 0.8
         let image = UIImage(named: "menu_close_button", in: PieOverlayMenuContentViewController.getPieOverlayMenuResourcesBundle(), compatibleWith: nil)
         btn.setImage(image, for: UIControlState())
         return btn
@@ -83,8 +86,8 @@ open class PieOverlayMenuContentViewController: UIViewController {
     }
 
     // MARK: - Overrides -
-    override open func viewDidLoad() {
-        super.viewDidLoad()
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
         self.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         self.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
@@ -93,6 +96,25 @@ open class PieOverlayMenuContentViewController: UIViewController {
         UIApplication.shared.statusBarStyle = .lightContent
 
         setupViews()
+
+        if let blurEffectStyle = blurEffectStyle {
+            // Set up blur effect
+            backgroundImage.image = snapshot()
+            let blurEffect = UIBlurEffect(style: blurEffectStyle)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            blurEffectView.frame = backgroundImage.bounds
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+            let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
+            let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
+            vibrancyEffectView.frame = backgroundImage.bounds
+            vibrancyEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+            blurEffectView.contentView.addSubview(vibrancyEffectView)
+            backgroundImage.addSubview(blurEffectView)
+        } else {
+            self.view.backgroundColor = UIColor(red: 67/255, green: 75/255, blue: 90/255, alpha: 1.0)
+        }
     }
 
     // MARK: - Internal methods -
@@ -103,9 +125,15 @@ open class PieOverlayMenuContentViewController: UIViewController {
         self.contentView.addSubview(viewController.view)
         let viewsDict : [String : Any] = ["subView":viewController.view]
         [NSLayoutConstraint.constraints(withVisualFormat: "H:|[subView]|", options: [], metrics: nil, views: viewsDict),
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|[subView]|", options: [], metrics: nil, views: viewsDict)
+         NSLayoutConstraint.constraints(withVisualFormat: "V:|[subView]|", options: [], metrics: nil, views: viewsDict)
             ].forEach { NSLayoutConstraint.activate($0) }
-        animated ? animateChangeContentViewController(viewController) : self.replaceCurrentViewController(viewController)
+        viewController.viewWillAppear(animated)
+        if animated {
+            animateChangeContentViewController(viewController)
+        } else {
+            self.replaceCurrentViewController(viewController)
+            viewController.viewDidAppear(false)
+        }
     }
 
     fileprivate func animateChangeContentViewController(_ viewController: UIViewController) {
@@ -115,16 +143,17 @@ open class PieOverlayMenuContentViewController: UIViewController {
         viewController.view.layoutIfNeeded()
         UIView
             .animate(withDuration: 1.0,
-                                 delay: 0.0,
-                                 usingSpringWithDamping: 0.6,
-                                 initialSpringVelocity: 10.0,
-                                 options: UIViewAnimationOptions(),
-                                 animations: {
-                                    self.topViewController?.view.transform = CGAffineTransform(scaleX: 1.0, y: 0.01)
-                                    viewController.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                                    viewController.view.alpha = 1
+                     delay: 0.0,
+                     usingSpringWithDamping: 0.6,
+                     initialSpringVelocity: 10.0,
+                     options: UIViewAnimationOptions(),
+                     animations: {
+                        self.topViewController?.view.transform = CGAffineTransform(scaleX: 1.0, y: 0.01)
+                        viewController.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        viewController.view.alpha = 1
             }) { _ in
                 self.replaceCurrentViewController(viewController)
+                viewController.viewDidAppear(true)
         }
     }
 
@@ -132,7 +161,7 @@ open class PieOverlayMenuContentViewController: UIViewController {
         self.topViewController?.view.removeFromSuperview()
         self.topViewController?.removeFromParentViewController()
         // TODO: Reimplement this.
-//        (viewController as? PieOverlayMenuContentView)?.overlayMenu = self
+        //        (viewController as? PieOverlayMenuContentView)?.overlayMenu = self
         self.topViewController = viewController
         // TODO: Call this dataSourceUpdate earlier
         self.dataSourceUpdate()
@@ -146,8 +175,20 @@ open class PieOverlayMenuContentViewController: UIViewController {
         footerLabel.text = dataSource.overlayMenuTitleForFooter(self.topViewController)
     }
 
+    fileprivate func snapshot() -> UIImage? {
+        guard let window = UIApplication.shared.keyWindow else { return nil }
+        UIGraphicsBeginImageContextWithOptions(window.bounds.size, false, window.screen.scale)
+        window.drawHierarchy(in: window.bounds, afterScreenUpdates: false)
+        let snapshotImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return snapshotImage
+    }
+
     // MARK: UI Setup
     fileprivate func setupViews() {
+        self.view.subviews.forEach{ $0.removeFromSuperview() }
+        self.backgroundImage.subviews.forEach{ $0.removeFromSuperview() }
+        
         viewsDictionary = [
             "topLayoutGuide": self.topLayoutGuide,
             "headerView":headerView,
@@ -157,6 +198,13 @@ open class PieOverlayMenuContentViewController: UIViewController {
             "footerView": footerView,
             "footerLabel": footerLabel
         ]
+
+        // Set up background image
+        if blurEffectStyle != nil {
+            self.backgroundImage.frame = self.view.bounds
+            self.backgroundImage.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+            self.view.addSubview(backgroundImage)
+        }
 
         self.view.addSubview(headerView)
         closeButton.addTarget(self, action: #selector(PieOverlayMenuContentViewController.close), for: UIControlEvents.touchUpInside)
@@ -173,21 +221,21 @@ open class PieOverlayMenuContentViewController: UIViewController {
 
     fileprivate func setupHeaderViewConstraints() {
         [NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[closeButton]-0-|", options: [], metrics: nil, views: viewsDictionary),
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-18-[closeButton]", options: [], metrics: nil, views: viewsDictionary),
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[headerLabel]-0-|", options: [], metrics: nil, views: viewsDictionary),
-            NSLayoutConstraint.constraints(withVisualFormat: "H:[closeButton]-32-[headerLabel]", options: [], metrics: nil, views: viewsDictionary),
-            NSLayoutConstraint.constraints(withVisualFormat: "V:[topLayoutGuide]-[headerView(50)]", options: [], metrics: nil, views: viewsDictionary),
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[headerView]-0-|", options: [], metrics: nil, views: viewsDictionary)
+         NSLayoutConstraint.constraints(withVisualFormat: "H:|-18-[closeButton]", options: [], metrics: nil, views: viewsDictionary),
+         NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[headerLabel]-0-|", options: [], metrics: nil, views: viewsDictionary),
+         NSLayoutConstraint.constraints(withVisualFormat: "H:[closeButton]-32-[headerLabel]", options: [], metrics: nil, views: viewsDictionary),
+         NSLayoutConstraint.constraints(withVisualFormat: "V:[topLayoutGuide]-[headerView(50)]", options: [], metrics: nil, views: viewsDictionary),
+         NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[headerView]-0-|", options: [], metrics: nil, views: viewsDictionary)
             ].forEach { NSLayoutConstraint.activate($0) }
     }
 
     fileprivate func setupContentAndFooterViewsConstraints() {
         [NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[footerLabel]-0-|", options: [], metrics: nil, views: viewsDictionary),
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[footerLabel]-0-|", options: [], metrics: nil, views: viewsDictionary),
-            NSLayoutConstraint.constraints(withVisualFormat: "V:[headerView]-50-[contentView]-75-[footerView]", options: [], metrics: nil, views: viewsDictionary),
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-100-[contentView]-100-|", options: [], metrics: nil, views: viewsDictionary),
-            NSLayoutConstraint.constraints(withVisualFormat: "V:[footerView(50)]-0-|", options: [], metrics: nil, views: viewsDictionary),
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[footerView]-0-|", options: [], metrics: nil, views: viewsDictionary)
+         NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[footerLabel]-0-|", options: [], metrics: nil, views: viewsDictionary),
+         NSLayoutConstraint.constraints(withVisualFormat: "V:[headerView]-50-[contentView]-75-[footerView]", options: [], metrics: nil, views: viewsDictionary),
+         NSLayoutConstraint.constraints(withVisualFormat: "H:|-100-[contentView]-100-|", options: [], metrics: nil, views: viewsDictionary),
+         NSLayoutConstraint.constraints(withVisualFormat: "V:[footerView(50)]-0-|", options: [], metrics: nil, views: viewsDictionary),
+         NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[footerView]-0-|", options: [], metrics: nil, views: viewsDictionary)
             ].forEach { NSLayoutConstraint.activate($0) }
     }
 

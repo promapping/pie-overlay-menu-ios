@@ -17,8 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let menuVC = storyboard.instantiateViewController(withIdentifier: "MenuViewControllerID")
-        self.window?.rootViewController = PieOverlayMenu(contentViewController: storyboard.instantiateInitialViewController()!,
+        let pieOverlayMenu = PieOverlayMenu(contentViewController: storyboard.instantiateInitialViewController()!,
                                                          menuViewController: menuVC)
+        pieOverlayMenu.menuViewController?.blurEffectStyle = .dark
+        self.window?.rootViewController = pieOverlayMenu
         return true
     }
 
