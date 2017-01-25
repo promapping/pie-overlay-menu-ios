@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
     s.name         = "PieOverlayMenu"
-    s.version      = "0.1.0"
+    s.version      = "0.2.0"
     s.summary      = "Pie mapping fullscreen overlay menu"
 
     s.homepage     = "https://github.com/piemapping/pie-overlay-menu-ios"
     s.license      = { :type => "MIT", :file => "LICENSE" }
 
-    s.author             = { "Anas AIT ALI" => "aitali.anas@gmail.com" }
+    s.author             = { "Anas AIT ALI" => "contact@aitali.co" }
     s.social_media_url   = "http://twitter.com/anasaitali"
 
     s.platform     = :ios, "8.0"
