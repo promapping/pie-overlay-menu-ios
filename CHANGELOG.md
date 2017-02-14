@@ -1,6 +1,8 @@
 # Change Log
 
 ## [Unreleased]
+
+## [0.3.0](https://github.com/piemapping/pie-overlay-menu-ios/tree/0.3.0) (2017-02-14)
 ### Added
 - Support for status bar style for both content and menu
 - CHANGELOG
