@@ -166,6 +166,7 @@ open class PieOverlayMenuContentViewController: UIViewController {
         // TODO: Call this dataSourceUpdate earlier
         self.dataSourceUpdate()
         viewController.didMove(toParentViewController: self)
+        setNeedsStatusBarAppearanceUpdate()
     }
 
     fileprivate func dataSourceUpdate() {
@@ -248,6 +249,10 @@ open class PieOverlayMenuContentViewController: UIViewController {
             bundle = podBundle
         }
         return bundle
+    }
+
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        return topViewController?.preferredStatusBarStyle ?? .default
     }
 }
 

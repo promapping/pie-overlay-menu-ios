@@ -46,9 +46,12 @@ open class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
         visibleViewController?.view.removeFromSuperview()
         visibleViewController?.removeFromParentViewController()
         viewController.didMove(toParentViewController: self)
+        visibleViewController = viewController
+        setNeedsStatusBarAppearanceUpdate()
     }
 
     open func setContentViewController(_ viewController: UIViewController, animated: Bool) {
+
         //TODO: Implement animated
         self.contentViewController?.viewWillDisappear(animated)
         viewController.viewWillAppear(animated)
@@ -76,6 +79,11 @@ open class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
     open func getMenuViewController() -> PieOverlayMenuContentViewController? {
         return self.menuViewController
     }
+
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        return self.visibleViewController?.preferredStatusBarStyle ?? .default
+    }
+
 }
 
 extension UIViewController {
