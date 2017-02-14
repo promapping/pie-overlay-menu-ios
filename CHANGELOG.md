@@ -2,12 +2,12 @@
 
 ## [Unreleased]
 
-## [0.3.0](https://github.com/piemapping/pie-overlay-menu-ios/tree/0.3.0) (2017-02-14)
+## [1.3.0](https://github.com/piemapping/pie-overlay-menu-ios/tree/1.3.0) (2017-02-14)
 ### Added
 - Support for status bar style for both content and menu
 - CHANGELOG
 
-## [0.2.0](https://github.com/piemapping/pie-overlay-menu-ios/tree/0.2.0) (2017-01-25)
+## [1.2.0](https://github.com/piemapping/pie-overlay-menu-ios/tree/1.2.0) (2017-01-25)
 ### Added
 - Blur effect on background
 
