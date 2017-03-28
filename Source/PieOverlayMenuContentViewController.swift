@@ -15,6 +15,11 @@ open class PieOverlayMenuContentViewController: UIViewController {
 
     // MARK: - Public properties -
     open var blurEffectStyle: UIBlurEffectStyle? = nil
+    open var contentInset: UIEdgeInsets = UIEdgeInsets(top: 50, left: 100, bottom: 75, right: 100) {
+        didSet {
+            self.view.layoutIfNeeded()
+        }
+    }
     open var dataSource : PieOverlayMenuDataSource? {
         didSet {
             dataSourceUpdate()
@@ -192,6 +197,7 @@ open class PieOverlayMenuContentViewController: UIViewController {
         
         viewsDictionary = [
             "topLayoutGuide": self.topLayoutGuide,
+            "bottomLayoutGuide": self.bottomLayoutGuide,
             "headerView":headerView,
             "closeButton": closeButton,
             "headerLabel": headerLabel,
@@ -207,12 +213,12 @@ open class PieOverlayMenuContentViewController: UIViewController {
             self.view.addSubview(backgroundImage)
         }
 
+        self.view.addSubview(contentView)
         self.view.addSubview(headerView)
         closeButton.addTarget(self, action: #selector(PieOverlayMenuContentViewController.close), for: UIControlEvents.touchUpInside)
         headerView.addSubview(closeButton)
         headerView.addSubview(headerLabel)
 
-        self.view.addSubview(contentView)
         self.view.addSubview(footerView)
         footerView.addSubview(footerLabel)
 
@@ -233,8 +239,8 @@ open class PieOverlayMenuContentViewController: UIViewController {
     fileprivate func setupContentAndFooterViewsConstraints() {
         [NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[footerLabel]-0-|", options: [], metrics: nil, views: viewsDictionary),
          NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[footerLabel]-0-|", options: [], metrics: nil, views: viewsDictionary),
-         NSLayoutConstraint.constraints(withVisualFormat: "V:[headerView]-50-[contentView]-75-[footerView]", options: [], metrics: nil, views: viewsDictionary),
-         NSLayoutConstraint.constraints(withVisualFormat: "H:|-100-[contentView]-100-|", options: [], metrics: nil, views: viewsDictionary),
+         NSLayoutConstraint.constraints(withVisualFormat: "V:[topLayoutGuide]-\(contentInset.top)-[contentView]-\(contentInset.bottom)-[bottomLayoutGuide]", options: [], metrics: nil, views: viewsDictionary),
+         NSLayoutConstraint.constraints(withVisualFormat: "H:|-\(contentInset.left)-[contentView]-\(contentInset.right)-|", options: [], metrics: nil, views: viewsDictionary),
          NSLayoutConstraint.constraints(withVisualFormat: "V:[footerView(50)]-0-|", options: [], metrics: nil, views: viewsDictionary),
          NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[footerView]-0-|", options: [], metrics: nil, views: viewsDictionary)
             ].forEach { NSLayoutConstraint.activate($0) }
