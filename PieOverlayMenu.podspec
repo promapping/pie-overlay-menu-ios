@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = "PieOverlayMenu"
-    s.version      = "1.3.0"
+    s.version      = "1.3.1"
     s.summary      = "Pie mapping fullscreen overlay menu"
 
     s.homepage     = "https://github.com/piemapping/pie-overlay-menu-ios"

@@ -1,6 +1,6 @@
 # Change Log
 
-## [Unreleased]
+## [1.3.1](https://github.com/piemapping/pie-overlay-menu-ios/tree/1.3.1) (2017-06-06)
 
 ### Added
 - Content Inset support
