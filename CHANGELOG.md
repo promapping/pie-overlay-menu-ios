@@ -5,6 +5,9 @@
 ### Added
 - Content Inset support
 
+### Changed
+- Fixed bug with frame on rotate
+
 ## [1.3.0](https://github.com/piemapping/pie-overlay-menu-ios/tree/1.3.0) (2017-02-14)
 ### Added
 - Support for status bar style for both content and menu

@@ -42,6 +42,7 @@ open class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
     fileprivate func changeVisibleViewController(_ viewController: UIViewController) {
         visibleViewController?.willMove(toParentViewController: nil)
         self.addChildViewController(viewController)
+        viewController.view.frame = self.view.bounds
         self.view.addSubview(viewController.view)
         visibleViewController?.view.removeFromSuperview()
         visibleViewController?.removeFromParentViewController()
@@ -51,7 +52,6 @@ open class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
     }
 
     open func setContentViewController(_ viewController: UIViewController, animated: Bool) {
-
         //TODO: Implement animated
         self.contentViewController?.viewWillDisappear(animated)
         viewController.viewWillAppear(animated)
