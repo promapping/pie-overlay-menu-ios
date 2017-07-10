@@ -13,32 +13,33 @@ public protocol PieOverlayMenuProtocol {
     func showMenu(_ animated: Bool)
     func closeMenu(_ animated: Bool)
     func getMenuViewController() -> PieOverlayMenuContentViewController?
+    func getContentViewController() -> UIViewController?
 }
 
 open class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
-
+    
     open fileprivate(set) var contentViewController: UIViewController?
     open fileprivate(set) var menuViewController: PieOverlayMenuContentViewController?
     fileprivate var visibleViewController: UIViewController?
-
+    
     // MARK: - Init methods -
     public init() {
         super.init(nibName: nil, bundle: nil)
         print("this is not handled yet")
     }
-
+    
     public init(contentViewController: UIViewController, menuViewController: UIViewController) {
         super.init(nibName: nil, bundle: nil)
-
+        
         self.contentViewController = contentViewController
         self.menuViewController = PieOverlayMenuContentViewController(rootViewController: menuViewController)
         self.changeVisibleViewController(contentViewController)
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     fileprivate func changeVisibleViewController(_ viewController: UIViewController) {
         visibleViewController?.willMove(toParentViewController: nil)
         self.addChildViewController(viewController)
@@ -50,7 +51,7 @@ open class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
         visibleViewController = viewController
         setNeedsStatusBarAppearanceUpdate()
     }
-
+    
     open func setContentViewController(_ viewController: UIViewController, animated: Bool) {
         //TODO: Implement animated
         self.contentViewController?.viewWillDisappear(animated)
@@ -60,37 +61,45 @@ open class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
         viewController.viewDidAppear(animated)
         self.contentViewController = viewController
     }
-
+    
     open func showMenu(_ animated: Bool) {
         //TODO: Implement animated
         self.menuViewController?.viewWillAppear(animated)
         self.changeVisibleViewController(self.menuViewController!)
         self.menuViewController?.viewDidAppear(animated)
     }
-
-    open func closeMenu(_ animated: Bool) {
+    
+    open func closeMenu(_ animated: Bool, _ completion: ((Bool) -> ())? = nil) {
         //TODO: Implement animated
         self.menuViewController?.viewWillDisappear(animated)
         self.changeVisibleViewController(self.contentViewController!)
         self.menuViewController?.viewDidDisappear(animated)
-        _ = self.menuViewController?.popToRootViewControllerAnimated(true)
+        self.menuViewController?.popToRootViewControllerAnimated(true, completion)
     }
-
+    
     open func getMenuViewController() -> PieOverlayMenuContentViewController? {
         return self.menuViewController
     }
-
+    
+    open func getContentViewController() -> UIViewController? {
+        return self.contentViewController
+    }
+    
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         return self.visibleViewController?.preferredStatusBarStyle ?? .default
     }
-
+    
 }
 
 extension UIViewController {
     public func pieOverlayMenuContent() -> PieOverlayMenuContentViewController? {
         return self.pieOverlayMenu()?.getMenuViewController()
     }
-
+    
+    public func pieOverlayContentViewController() -> UIViewController? {
+        return self.pieOverlayMenu()?.getContentViewController()
+    }
+    
     public func pieOverlayMenu() -> PieOverlayMenuProtocol? {
         var iteration : UIViewController? = self.parent
         if (iteration == nil) {
@@ -105,10 +114,10 @@ extension UIViewController {
                 iteration = nil
             }
         } while (iteration != nil)
-
+        
         return iteration as? PieOverlayMenuProtocol
     }
-
+    
     internal func topMostController () -> PieOverlayMenuProtocol? {
         var topController : UIViewController? = UIApplication.shared.keyWindow?.rootViewController
         if (topController is UITabBarController) {
@@ -121,7 +130,7 @@ extension UIViewController {
             }
             topController = topController?.presentedViewController
         }
-
+        
         if (lastMenuProtocol != nil) {
             return lastMenuProtocol
         }
