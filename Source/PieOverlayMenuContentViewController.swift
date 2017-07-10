@@ -268,7 +268,7 @@ extension PieOverlayMenuContentViewController {
     // MARK: - Public methods -
     public func close() {
         delegate?.overlayMenuCloseButtonPressed?()
-        self.pieOverlayMenu()?.closeMenu(false)
+        self.pieOverlayMenu()?.closeMenu(false, nil)
     }
 
     public func pushViewController(_ viewController: UIViewController, animated: Bool) {
