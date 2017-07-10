@@ -123,7 +123,7 @@ open class PieOverlayMenuContentViewController: UIViewController {
     }
 
     // MARK: - Internal methods -
-    fileprivate func changeContentController(_ viewController: UIViewController, animated : Bool = true) {
+    fileprivate func changeContentController(_ viewController: UIViewController, animated : Bool = true, _ completion: ((Bool) -> ())? = nil) {
         topViewController?.willMove(toParentViewController: nil)
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
         self.addChildViewController(viewController)
@@ -134,14 +134,15 @@ open class PieOverlayMenuContentViewController: UIViewController {
             ].forEach { NSLayoutConstraint.activate($0) }
         viewController.viewWillAppear(animated)
         if animated {
-            animateChangeContentViewController(viewController)
+            animateChangeContentViewController(viewController, completion)
         } else {
             self.replaceCurrentViewController(viewController)
             viewController.viewDidAppear(false)
+            completion?(true)
         }
     }
 
-    fileprivate func animateChangeContentViewController(_ viewController: UIViewController) {
+    fileprivate func animateChangeContentViewController(_ viewController: UIViewController, _ completion: ((Bool) -> ())? = nil) {
         self.topViewController?.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         viewController.view.alpha = 1
         viewController.view.transform = CGAffineTransform(scaleX: 1.0, y: 0.01)
@@ -156,9 +157,10 @@ open class PieOverlayMenuContentViewController: UIViewController {
                         self.topViewController?.view.transform = CGAffineTransform(scaleX: 1.0, y: 0.01)
                         viewController.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                         viewController.view.alpha = 1
-            }) { _ in
+            }) { finished in
                 self.replaceCurrentViewController(viewController)
                 viewController.viewDidAppear(true)
+                completion?(finished)
         }
     }
 
@@ -284,13 +286,14 @@ extension PieOverlayMenuContentViewController {
         return nil
     }
 
-    public func popToRootViewControllerAnimated(_ animated: Bool) -> [UIViewController]? {
+    @discardableResult
+    public func popToRootViewControllerAnimated(_ animated: Bool, _ completion: ((Bool) -> ())? = nil) -> [UIViewController]? {
         guard viewControllers.count > 1 else { return nil }
         var ret: [UIViewController] = []
         for _ in 0..<viewControllers.count-1 {
             ret.append(viewControllers.popLast()!)
         }
-        self.changeContentController(viewControllers.last!, animated: animated)
+        self.changeContentController(viewControllers.last!, animated: animated, completion)
         return ret
     }
 

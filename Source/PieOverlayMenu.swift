@@ -69,12 +69,12 @@ open class PieOverlayMenu: UIViewController, PieOverlayMenuProtocol {
         self.menuViewController?.viewDidAppear(animated)
     }
     
-    open func closeMenu(_ animated: Bool) {
+    open func closeMenu(_ animated: Bool, _ completion: ((Bool) -> ())? = nil) {
         //TODO: Implement animated
         self.menuViewController?.viewWillDisappear(animated)
         self.changeVisibleViewController(self.contentViewController!)
         self.menuViewController?.viewDidDisappear(animated)
-        _ = self.menuViewController?.popToRootViewControllerAnimated(true)
+        self.menuViewController?.popToRootViewControllerAnimated(true, completion)
     }
     
     open func getMenuViewController() -> PieOverlayMenuContentViewController? {
