@@ -11,7 +11,7 @@ import UIKit
 public protocol PieOverlayMenuProtocol {
     func setContentViewController(_ viewController: UIViewController, animated: Bool)
     func showMenu(_ animated: Bool)
-    func closeMenu(_ animated: Bool)
+    func closeMenu(_ animated: Bool, _ completion: ((Bool) -> ())?)
     func getMenuViewController() -> PieOverlayMenuContentViewController?
     func getContentViewController() -> UIViewController?
 }
