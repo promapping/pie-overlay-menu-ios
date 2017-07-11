@@ -288,7 +288,12 @@ extension PieOverlayMenuContentViewController {
 
     @discardableResult
     public func popToRootViewControllerAnimated(_ animated: Bool, _ completion: ((Bool) -> ())? = nil) -> [UIViewController]? {
-        guard viewControllers.count > 1 else { return nil }
+        guard
+            viewControllers.count > 1
+        else {
+            completion?(true)
+            return nil
+        }
         var ret: [UIViewController] = []
         for _ in 0..<viewControllers.count-1 {
             ret.append(viewControllers.popLast()!)
