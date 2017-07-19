@@ -230,10 +230,10 @@ open class PieOverlayMenuContentViewController: UIViewController {
 
     fileprivate func setupHeaderViewConstraints() {
         [NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[closeButton]-0-|", options: [], metrics: nil, views: viewsDictionary),
-         NSLayoutConstraint.constraints(withVisualFormat: "H:|-18-[closeButton]", options: [], metrics: nil, views: viewsDictionary),
+         NSLayoutConstraint.constraints(withVisualFormat: "H:|-33-[closeButton]", options: [], metrics: nil, views: viewsDictionary),
          NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[headerLabel]-0-|", options: [], metrics: nil, views: viewsDictionary),
          NSLayoutConstraint.constraints(withVisualFormat: "H:[closeButton]-32-[headerLabel]", options: [], metrics: nil, views: viewsDictionary),
-         NSLayoutConstraint.constraints(withVisualFormat: "V:[topLayoutGuide]-[headerView(50)]", options: [], metrics: nil, views: viewsDictionary),
+         NSLayoutConstraint.constraints(withVisualFormat: "V:[topLayoutGuide]-[headerView(40)]", options: [], metrics: nil, views: viewsDictionary),
          NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[headerView]-0-|", options: [], metrics: nil, views: viewsDictionary)
             ].forEach { NSLayoutConstraint.activate($0) }
     }
