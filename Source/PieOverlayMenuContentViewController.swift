@@ -40,7 +40,6 @@ open class PieOverlayMenuContentViewController: UIViewController {
         let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.imageView?.contentMode = UIViewContentMode.scaleAspectFit
-        btn.alpha = 0.8
         let image = UIImage(named: "menu_close_button", in: PieOverlayMenuContentViewController.getPieOverlayMenuResourcesBundle(), compatibleWith: nil)
         btn.setImage(image, for: UIControlState())
         return btn
